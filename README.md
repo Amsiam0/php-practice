@@ -1,4 +1,4 @@
-# Introduction
+# Introduction To PHP
 
 PHP, which stands for Hypertext Preprocessor, is a popular open-source, server-side scripting language designed primarily for web development. It is embedded within HTML code and executed on the server, generating dynamic web content that is then sent to the client's browser. PHP is widely used due to its simplicity, flexibility, and robust ecosystem.
 
@@ -23,3 +23,4 @@ sudo apt install php8.4-common php8.4-cli php8.4-fpm php8.4-{curl,bz2,mbstring,i
 ```
 php -v
 ```
+
