@@ -1267,3 +1267,213 @@ $utf8 = "こんにちは"; // Japanese "Hello"
 echo mb_strlen($utf8); // Output: 5 (counts characters, not bytes)
 ?>
 ```
+
+
+---
+
+### PHP File Handling
+PHP provides built-in functions to work with files: reading, writing, creating, deleting, and more. File operations are essential for tasks like logging, configuration management, or data storage.
+
+#### 1. Opening and Closing Files
+- **`fopen()`**: Opens a file or URL and returns a file pointer resource.
+  - Modes: `"r"` (read), `"w"` (write, overwrites), `"a"` (append), `"r+"` (read/write), etc.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  // Work with file
+  fclose($file); // Always close the file
+  ?>
+  ```
+
+- **`fclose()`**: Closes an open file pointer.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  fclose($file); // Closes the file
+  ?>
+  ```
+
+---
+
+#### 2. Reading Files
+- **`fread()`**: Reads a specified number of bytes from a file.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  $content = fread($file, filesize("example.txt"));
+  echo $content;
+  fclose($file);
+  ?>
+  ```
+
+- **`file_get_contents()`**: Reads the entire file into a string (simpler alternative).
+  ```php
+  <?php
+  $content = file_get_contents("example.txt");
+  echo $content;
+  ?>
+  ```
+
+- **`fgets()`**: Reads a single line from a file.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  while (!feof($file)) {
+      echo fgets($file) . "<br>";
+  }
+  fclose($file);
+  ?>
+  ```
+
+- **`file()`**: Reads a file into an array, each element being a line.
+  ```php
+  <?php
+  $lines = file("example.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  print_r($lines);
+  ?>
+  ```
+
+---
+
+#### 3. Writing to Files
+- **`fwrite()` or `fputs()`**: Writes a string to a file.
+  ```php
+  <?php
+  $file = fopen("example.txt", "w");
+  fwrite($file, "Hello, World!");
+  fclose($file);
+  ?>
+  ```
+
+- **`file_put_contents()`**: Writes a string to a file (simpler alternative).
+  - Overwrites by default; use `FILE_APPEND` to append.
+  ```php
+  <?php
+  file_put_contents("example.txt", "Hello, PHP!");
+  // Append
+  file_put_contents("example.txt", " More text.", FILE_APPEND);
+  ?>
+  ```
+
+---
+
+#### 4. Checking File Existence and Properties
+- **`file_exists()`**: Checks if a file or directory exists.
+  ```php
+  <?php
+  if (file_exists("example.txt")) {
+      echo "File exists!";
+  }
+  ?>
+  ```
+
+- **`filesize()`**: Returns the size of a file in bytes.
+  ```php
+  <?php
+  echo filesize("example.txt"); // Output: Size in bytes
+  ?>
+  ```
+
+- **`is_readable()` / `is_writable()`**: Checks if a file can be read or written.
+  ```php
+  <?php
+  if (is_readable("example.txt")) {
+      echo "File is readable!";
+  }
+  ?>
+  ```
+
+---
+
+#### 5. Deleting and Renaming Files
+- **`unlink()`**: Deletes a file.
+  ```php
+  <?php
+  if (file_exists("example.txt")) {
+      unlink("example.txt");
+      echo "File deleted!";
+  }
+  ?>
+  ```
+
+- **`rename()`**: Renames or moves a file.
+  ```php
+  <?php
+  rename("oldname.txt", "newname.txt");
+  ?>
+  ```
+
+---
+
+#### 6. Working with Directories
+- **`mkdir()`**: Creates a directory.
+  ```php
+  <?php
+  mkdir("new_folder");
+  ?>
+  ```
+
+- **`rmdir()`**: Removes an empty directory.
+  ```php
+  <?php
+  rmdir("new_folder");
+  ?>
+  ```
+
+- **`scandir()`**: Lists files and directories in a directory.
+  ```php
+  <?php
+  $files = scandir("."); // Current directory
+  print_r($files);
+  ?>
+  ```
+
+---
+
+#### 7. File Pointer Control
+- **`feof()`**: Checks if the end of the file has been reached.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  while (!feof($file)) {
+      echo fgets($file);
+  }
+  fclose($file);
+  ?>
+  ```
+
+- **`rewind()`**: Moves the file pointer back to the beginning.
+  ```php
+  <?php
+  $file = fopen("example.txt", "r");
+  echo fgets($file); // Reads first line
+  rewind($file);
+  echo fgets($file); // Reads first line again
+  fclose($file);
+  ?>
+  ```
+
+---
+
+#### Example: Complete File Operation
+```php
+<?php
+// Write to a file
+file_put_contents("log.txt", "Log entry 1\n");
+
+// Append to the file
+file_put_contents("log.txt", "Log entry 2\n", FILE_APPEND);
+
+// Read and display file
+if (file_exists("log.txt")) {
+    $content = file_get_contents("log.txt");
+    echo nl2br($content); // Converts newlines to <br>
+    // Output:
+    // Log entry 1
+    // Log entry 2
+}
+
+// Delete the file
+unlink("log.txt");
+?>
+```
