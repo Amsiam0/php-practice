@@ -491,3 +491,200 @@ for ($i = 0; $i < 5; $i++) {
 // Output: 0, 1, 3, 4
 ?>
 ```
+
+---
+
+### PHP Functions
+Functions in PHP are reusable blocks of code that perform a specific task. They can take input (parameters), process it, and optionally return a value. PHP also supports variable-length argument lists for flexibility.
+
+#### 1. Defining a Function
+- Use the `function` keyword followed by the function name and parentheses `()`.
+- Syntax:
+  ```php
+  function functionName($parameter1, $parameter2) {
+      // Code to execute
+      return $value; // Optional
+  }
+  ```
+
+**Example:**
+```php
+<?php
+function sayHello() {
+    echo "Hello, World!";
+}
+sayHello(); // Output: Hello, World!
+?>
+```
+
+---
+
+#### 2. Functions with Parameters
+- Parameters allow data to be passed into a function.
+
+**Example:**
+```php
+<?php
+function greet($name) {
+    echo "Hello, $name!";
+}
+greet("Alice"); // Output: Hello, Alice!
+?>
+```
+
+---
+
+#### 3. Default Parameter Values
+- Parameters can have default values, making them optional.
+
+**Example:**
+```php
+<?php
+function welcome($name = "Guest") {
+    echo "Welcome, $name!";
+}
+welcome();       // Output: Welcome, Guest!
+welcome("John"); // Output: Welcome, John!
+?>
+```
+
+---
+
+#### 4. Return Values
+- Use `return` to send a value back to the caller.
+
+**Example:**
+```php
+<?php
+function multiply($x, $y) {
+    return $x * $y;
+}
+$result = multiply(4, 5);
+echo $result; // Output: 20
+?>
+```
+
+---
+
+#### 5. Type Declarations (Optional)
+- Optional type hints for parameters and return values.
+
+**Example:**
+```php
+<?php
+function divide(float $a, float $b): float {
+    return $a / $b;
+}
+echo divide(10.5, 2.0); // Output: 5.25
+?>
+```
+
+---
+
+#### 6. Variable-Length Argument Lists
+- The `...` operator collects all arguments into an array.
+
+**Syntax:**
+```php
+function functionName(...$args) {
+    // $args is an array of all passed arguments
+}
+```
+
+**Example:**
+```php
+<?php
+function sum(...$numbers) {
+    $total = 0;
+    foreach ($numbers as $num) {
+        $total += $num;
+    }
+    return $total;
+}
+echo sum(1, 2, 3);       // Output: 6
+echo sum(4, 5, 6, 7);    // Output: 22
+echo sum();              // Output: 0 (no arguments)
+?>
+```
+
+**With Type Hinting:**
+```php
+<?php
+function concatenate(string ...$words) {
+    return implode(" ", $words);
+}
+echo concatenate("Hello", "World"); // Output: Hello World
+echo concatenate("PHP", "is", "fun"); // Output: PHP is fun
+?>
+```
+
+**Mixing Fixed and Variable Arguments:**
+- Fixed parameters must come before the variadic parameter.
+```php
+<?php
+function describe($prefix, ...$items) {
+    echo "$prefix: " . implode(", ", $items);
+}
+describe("Fruits", "apple", "banana", "orange");
+// Output: Fruits: apple, banana, orange
+?>
+```
+
+**Using an Array as Arguments:**
+- You can pass an array to a variadic function using the `...` operator to "unpack" it.
+```php
+<?php
+$numbers = [1, 2, 3, 4];
+echo sum(...$numbers); // Output: 10
+?>
+```
+
+---
+
+#### 7. Variable Scope
+- Variables inside a function are local by default; use `global` to access external variables.
+
+**Example:**
+```php
+<?php
+$num = 10;
+function increment() {
+    global $num;
+    $num++;
+}
+increment();
+echo $num; // Output: 11
+?>
+```
+
+---
+
+#### 8. Anonymous Functions (Closures)
+- Nameless functions, often used as callbacks.
+
+**Example:**
+```php
+<?php
+$square = function($x) {
+    return $x * $x;
+};
+echo $square(3); // Output: 9
+?>
+```
+
+---
+
+#### 9. Pass by Reference
+- Use `&` to modify the original variable.
+
+**Example:**
+```php
+<?php
+function addFive(&$number) {
+    $number += 5;
+}
+$value = 10;
+addFive($value);
+echo $value; // Output: 15
+?>
+```
