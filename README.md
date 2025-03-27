@@ -243,3 +243,122 @@ $canVote = $age >= 18;    // Comparison
 echo $greeting . "<br>";  // Output: Hi, Alice
 ?>
 ```
+
+### Conditional Statements
+Conditional statements in PHP allow you to execute different blocks of code based on whether a condition is true or false. They are essential for decision-making in programming.
+
+#### 1. `if` Statement
+- Executes a block of code if a condition is true.
+- Syntax:
+  ```php
+  if (condition) {
+      // Code to execute if condition is true
+  }
+  ```
+
+**Example:**
+```php
+<?php
+$age = 20;
+if ($age >= 18) {
+    echo "You are an adult.";
+}
+// Output: You are an adult.
+?>
+```
+
+---
+
+#### 2. `if...else` Statement
+- Adds an alternative block of code to execute if the condition is false.
+- Syntax:
+  ```php
+  if (condition) {
+      // Code if condition is true
+  } else {
+      // Code if condition is false
+  }
+  ```
+
+**Example:**
+```php
+<?php
+$age = 15;
+if ($age >= 18) {
+    echo "You can vote.";
+} else {
+    echo "You cannot vote yet.";
+}
+// Output: You cannot vote yet.
+?>
+```
+
+---
+
+#### 3. `if...elseif...else` Statement
+- Tests multiple conditions in sequence, executing the first true condition’s block or the `else` block if none are true.
+- Syntax:
+  ```php
+  if (condition1) {
+      // Code if condition1 is true
+  } elseif (condition2) {
+      // Code if condition2 is true
+  } else {
+      // Code if no conditions are true
+  }
+  ```
+
+**Example:**
+```php
+<?php
+$score = 85;
+if ($score >= 90) {
+    echo "Grade: A+";
+} elseif ($score >= 80) {
+    echo "Grade: A";
+} elseif ($score >= 70) {
+    echo "Grade: A-";
+} else {
+    echo "Grade: F";
+}
+// Output: Grade: A
+?>
+```
+
+---
+
+#### 4. `switch` Statement
+- Evaluates an expression and executes code based on matching cases. It’s an alternative to multiple `if...elseif` statements.
+- Syntax:
+  ```php
+  switch (expression) {
+      case value1:
+          // Code if expression equals value1
+          break;
+      case value2:
+          // Code if expression equals value2
+          break;
+      default:
+          // Code if no cases match
+  }
+  ```
+- `break` prevents fall-through to the next case.
+- `default` is optional and runs if no case matches.
+
+**Example:**
+```php
+<?php
+$day = "Monday";
+switch ($day) {
+    case "Monday":
+        echo "Start of the week.";
+        break;
+    case "Friday":
+        echo "End of the work week.";
+        break;
+    default:
+        echo "Some other day.";
+}
+// Output: Start of the week.
+?>
+```
