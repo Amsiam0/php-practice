@@ -688,3 +688,343 @@ addFive($value);
 echo $value; // Output: 15
 ?>
 ```
+
+---
+
+### PHP Array Functions
+PHP arrays can be indexed (numeric keys), associative (string keys), or multidimensional. These functions help you create, modify, and query arrays efficiently.
+
+#### 1. Creating and Adding Elements
+- **`array()` or `[]`**: Create an array.
+  ```php
+  <?php
+  $fruits = array("apple", "banana"); // Old syntax
+  $colors = ["red", "blue"];          // Modern syntax
+  ?>
+  ```
+
+- **`array_push()`**: Add one or more elements to the end of an array.
+  ```php
+  <?php
+  $numbers = [1, 2];
+  array_push($numbers, 3, 4);
+  print_r($numbers); // Output: Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+  ?>
+  ```
+
+- **`array_unshift()`**: Add elements to the beginning of an array.
+  ```php
+  <?php
+  $letters = ["b", "c"];
+  array_unshift($letters, "a");
+  print_r($letters); // Output: Array ( [0] => a [1] => b [2] => c )
+  ?>
+  ```
+
+---
+
+#### 2. Removing Elements
+- **`array_pop()`**: Remove and return the last element.
+  ```php
+  <?php
+  $stack = [1, 2, 3];
+  $last = array_pop($stack);
+  echo $last;        // Output: 3
+  print_r($stack);   // Output: Array ( [0] => 1 [1] => 2 )
+  ?>
+  ```
+
+- **`array_shift()`**: Remove and return the first element.
+  ```php
+  <?php
+  $queue = [1, 2, 3];
+  $first = array_shift($queue);
+  echo $first;       // Output: 1
+  print_r($queue);   // Output: Array ( [0] => 2 [1] => 3 )
+  ?>
+  ```
+
+- **`unset()`**: Remove an element by key (does not reindex numeric keys).
+  ```php
+  <?php
+  $data = ["a" => 1, "b" => 2, "c" => 3];
+  unset($data["b"]);
+  print_r($data); // Output: Array ( [a] => 1 [c] => 3 )
+  ?>
+  ```
+
+---
+
+#### 3. Searching and Checking
+- **`in_array()`**: Check if a value exists in an array.
+  ```php
+  <?php
+  $fruits = ["apple", "banana"];
+  if (in_array("apple", $fruits)) {
+      echo "Found!"; // Output: Found!
+  }
+  ?>
+  ```
+
+- **`array_search()`**: Return the key of a value (or `false` if not found).
+  ```php
+  <?php
+  $colors = ["a" => "red", "b" => "blue"];
+  $key = array_search("blue", $colors);
+  echo $key; // Output: b
+  ?>
+  ```
+
+- **`array_key_exists()`**: Check if a key exists in an array.
+  ```php
+  <?php
+  $person = ["name" => "Alice", "age" => 25];
+  if (array_key_exists("name", $person)) {
+      echo "Key exists!"; // Output: Key exists!
+  }
+  ?>
+  ```
+
+---
+
+#### 4. Sorting
+- **`sort()`**: Sort array in ascending order (reindexes numeric keys).
+  ```php
+  <?php
+  $numbers = [3, 1, 4];
+  sort($numbers);
+  print_r($numbers); // Output: Array ( [0] => 1 [1] => 3 [2] => 4 )
+  ?>
+  ```
+
+- **`rsort()`**: Sort array in descending order.
+  ```php
+  <?php
+  $numbers = [3, 1, 4];
+  rsort($numbers);
+  print_r($numbers); // Output: Array ( [0] => 4 [1] => 3 [2] => 1 )
+  ?>
+  ```
+
+- **`asort()`**: Sort associative array by value, preserving keys.
+  ```php
+  <?php
+  $ages = ["Alice" => 25, "Bob" => 20];
+  asort($ages);
+  print_r($ages); // Output: Array ( [Bob] => 20 [Alice] => 25 )
+  ?>
+  ```
+
+- **`ksort()`**: Sort associative array by key.
+  ```php
+  <?php
+  $data = ["z" => 1, "a" => 2];
+  ksort($data);
+  print_r($data); // Output: Array ( [a] => 2 [z] => 1 )
+  ?>
+  ```
+
+---
+
+#### 5. Merging and Combining
+- **`array_merge()`**: Merge two or more arrays.
+  ```php
+  <?php
+  $arr1 = [1, 2];
+  $arr2 = [3, 4];
+  $merged = array_merge($arr1, $arr2);
+  print_r($merged); // Output: Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+  ?>
+  ```
+
+- **`array_combine()`**: Create an array using one array for keys and another for values.
+  ```php
+  <?php
+  $keys = ["name", "age"];
+  $values = ["Alice", 25];
+  $combined = array_combine($keys, $values);
+  print_r($combined); // Output: Array ( [name] => Alice [age] => 25 )
+  ?>
+  ```
+
+---
+
+#### 6. Filtering and Mapping
+- **`array_filter()`**: Filter array elements using a callback function.
+  ```php
+  <?php
+  $numbers = [1, 2, 3, 4];
+  $even = array_filter($numbers, function($n) {
+      return $n % 2 == 0;
+  });
+  print_r($even); // Output: Array ( [1] => 2 [3] => 4 )
+  ?>
+  ```
+
+- **`array_map()`**: Apply a callback to each element and return a new array.
+  ```php
+  <?php
+  $numbers = [1, 2, 3];
+  $squared = array_map(function($n) {
+      return $n * $n;
+  }, $numbers);
+  print_r($squared); // Output: Array ( [0] => 1 [1] => 4 [2] => 9 )
+  ?>
+  ```
+
+---
+
+#### 7. Counting and Sizing
+- **`count()` or `sizeof()`**: Return the number of elements in an array.
+  ```php
+  <?php
+  $items = [1, 2, 3];
+  echo count($items); // Output: 3
+  ?>
+  ```
+
+- **`array_keys()`**: Return all keys of an array.
+  ```php
+  <?php
+  $data = ["name" => "Bob", "age" => 30];
+  $keys = array_keys($data);
+  print_r($keys); // Output: Array ( [0] => name [1] => age )
+  ?>
+  ```
+
+- **`array_values()`**: Return all values of an array (reindexed).
+  ```php
+  <?php
+  $data = ["name" => "Bob", "age" => 30];
+  $values = array_values($data);
+  print_r($values); // Output: Array ( [0] => Bob [1] => 30 )
+  ?>
+  ```
+
+---
+
+#### 8. Multidimensional Arrays
+- Functions like `array_column()` extract values from a specific key in a multidimensional array.
+  ```php
+  <?php
+  $users = [
+      ["id" => 1, "name" => "Alice"],
+      ["id" => 2, "name" => "Bob"]
+  ];
+  $names = array_column($users, "name");
+  print_r($names); // Output: Array ( [0] => Alice [1] => Bob )
+  ?>
+  ```
+---
+
+### PHP Array Destructuring
+Array destructuring in PHP (introduced in PHP 7.4 with improved syntax) lets you assign array elements to variables directly. It’s a shorthand for extracting values without manually indexing the array.
+
+#### 1. Basic Destructuring
+- Use square brackets `[]` or `list()` to unpack array elements into variables.
+- Syntax:
+  ```php
+  [$var1, $var2] = $array; // Modern syntax (PHP 7.4+)
+  // OR
+  list($var1, $var2) = $array; // Older syntax
+  ```
+
+**Example:**
+```php
+<?php
+$coords = [10, 20];
+[$x, $y] = $coords;
+echo "X: $x, Y: $y"; // Output: X: 10, Y: 20
+?>
+```
+
+---
+
+#### 2. Skipping Elements
+- Use commas to skip elements you don’t want to assign.
+- Syntax: `[$var1, , $var3] = $array;`
+
+**Example:**
+```php
+<?php
+$data = [1, 2, 3, 4];
+[$a, , $c] = $data;
+echo "A: $a, C: $c"; // Output: A: 1, C: 3
+?>
+```
+
+---
+
+#### 3. Destructuring Associative Arrays
+- Use the `=>` operator to target specific keys (PHP 7.4+).
+- Syntax: `["key1" => $var1, "key2" => $var2] = $array;`
+
+**Example:**
+```php
+<?php
+$person = ["name" => "Alice", "age" => 25];
+["name" => $name, "age" => $age] = $person;
+echo "Name: $name, Age: $age"; // Output: Name: Alice, Age: 25
+?>
+```
+
+---
+
+#### 4. Nested Destructuring
+- Destructure multidimensional arrays by nesting the syntax.
+
+**Example:**
+```php
+<?php
+$nested = [1, [2, 3]];
+[$a, [$b, $c]] = $nested;
+echo "A: $a, B: $b, C: $c"; // Output: A: 1, B: 2, C: 3
+?>
+```
+
+---
+
+#### 5. Using with Functions
+- Destructure return values from functions that return arrays.
+
+**Example:**
+```php
+<?php
+function getInfo() {
+    return ["John", 30];
+}
+[$name, $age] = getInfo();
+echo "Name: $name, Age: $age"; // Output: Name: John, Age: 30
+?>
+```
+
+---
+
+#### 6. Swapping Variables
+- Destructuring can swap values without a temporary variable.
+
+**Example:**
+```php
+<?php
+$a = 5;
+$b = 10;
+[$a, $b] = [$b, $a];
+echo "A: $a, B: $b"; // Output: A: 10, B: 5
+?>
+```
+
+---
+
+#### 7. Variable-Length Destructuring (with `...`)
+- Use the splat operator `...` to collect remaining elements into an array (similar to variable-length arguments).
+
+**Example:**
+```php
+<?php
+$numbers = [1, 2, 3, 4, 5];
+[$first, $second, ...$rest] = $numbers;
+echo "First: $first, Second: $second, Rest: ";
+print_r($rest); 
+// Output: First: 1, Second: 2, Rest: Array ( [0] => 3 [1] => 4 [2] => 5 )
+?>
+```
