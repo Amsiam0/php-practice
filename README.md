@@ -362,3 +362,132 @@ switch ($day) {
 // Output: Start of the week.
 ?>
 ```
+---
+
+### PHP Looping
+Loops in PHP allow you to repeat a block of code multiple times based on a condition or a set number of iterations. They are crucial for tasks like iterating over arrays or performing repetitive actions.
+
+#### 1. `for` Loop
+- Repeats a block of code a specific number of times.
+- Syntax:
+  ```php
+  for (initialization; condition; increment/decrement) {
+      // Code to repeat
+  }
+  ```
+- `initialization`: Sets the starting value (runs once at the start).
+- `condition`: Checked before each iteration; loop continues if true.
+- `increment/decrement`: Updates the counter after each iteration.
+
+**Example:**
+```php
+<?php
+for ($i = 1; $i <= 5; $i++) {
+    echo "Number: $i <br>";
+}
+?>
+```
+
+---
+
+#### 2. `while` Loop
+- Repeats a block of code as long as a condition is true.
+- Syntax:
+  ```php
+  while (condition) {
+      // Code to repeat
+  }
+  ```
+
+**Example:**
+```php
+<?php
+$count = 0;
+while ($count < 3) {
+    echo "Count: $count <br>";
+    $count++;
+}
+?>
+```
+
+---
+
+#### 3. `do...while` Loop
+- Similar to `while`, but the code runs at least once before checking the condition.
+- Syntax:
+  ```php
+  do {
+      // Code to repeat
+  } while (condition);
+  ```
+
+**Example:**
+```php
+<?php
+$x = 5;
+do {
+    echo "Value: $x <br>";
+    $x++;
+} while ($x < 5);
+// Output: Value: 5 (runs once even though condition is false)
+?>
+```
+
+---
+
+#### 4. `foreach` Loop
+- Designed for iterating over arrays or objects.
+- Syntax (for arrays):
+  ```php
+  foreach ($array as $value) {
+      // Code to repeat for each element
+  }
+  ```
+  Or with keys:
+  ```php
+  foreach ($array as $key => $value) {
+      // Code using key and value
+  }
+  ```
+
+**Example:**
+```php
+<?php
+$colors = ["Red", "Green", "Blue"];
+foreach ($colors as $color) {
+    echo "Color: $color <br>";
+}
+?>
+```
+
+---
+
+#### Loop Control
+- **`break`**: Exits the loop entirely.
+- **`continue`**: Skips the current iteration and moves to the next.
+
+**Example with `break`:**
+```php
+<?php
+for ($i = 0; $i < 10; $i++) {
+    if ($i == 4) {
+        break; // Stops loop when $i is 4
+    }
+    echo "$i <br>";
+}
+// Output: 0, 1, 2, 3
+?>
+```
+
+**Example with `continue`:**
+```php
+<?php
+for ($i = 0; $i < 5; $i++) {
+    if ($i == 2) {
+        continue; // Skips 2
+    }
+    echo "$i <br>";
+}
+// Output: 0, 1, 3, 4
+?>
+```
