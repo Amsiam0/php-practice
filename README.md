@@ -10,6 +10,8 @@ PHP, which stands for Hypertext Preprocessor, is a popular open-source, server-s
 - **Database Integration:** Strong support for databases like MySQL, PostgreSQL, and SQLite.
 - **Open-Source:** Free to use, with a large community contributing to its development.
 
+---
+
 ### Installation
 
 - **Ubuntu**
@@ -23,6 +25,7 @@ sudo apt install php8.4-common php8.4-cli php8.4-fpm php8.4-{curl,bz2,mbstring,i
 ```
 php -v
 ```
+---
 
 ### Basic Syntax
 
@@ -243,6 +246,7 @@ $canVote = $age >= 18;    // Comparison
 echo $greeting . "<br>";  // Output: Hi, Alice
 ?>
 ```
+---
 
 ### Conditional Statements
 Conditional statements in PHP allow you to execute different blocks of code based on whether a condition is true or false. They are essential for decision-making in programming.
@@ -364,7 +368,7 @@ switch ($day) {
 ```
 ---
 
-### PHP Looping
+### Looping
 Loops in PHP allow you to repeat a block of code multiple times based on a condition or a set number of iterations. They are crucial for tasks like iterating over arrays or performing repetitive actions.
 
 #### 1. `for` Loop
