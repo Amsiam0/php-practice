@@ -1477,3 +1477,215 @@ if (file_exists("log.txt")) {
 unlink("log.txt");
 ?>
 ```
+
+---
+
+### PHP File Uploads
+PHP allows you to handle file uploads from HTML forms using the `$_FILES` superglobal array. This process involves creating a form, processing the uploaded file on the server, and managing it (e.g., saving, validating).
+
+#### 1. HTML Form Setup
+- Use an HTML form with `enctype="multipart/form-data"` and a file input field.
+- The `method` must be `"POST"`.
+
+**Example:**
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <label for="file">Choose a file:</label>
+        <input type="file" name="uploaded_file" id="file">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html>
+```
+
+---
+
+#### 2. Handling the Upload in PHP
+- PHP stores uploaded file details in the `$_FILES` superglobal array.
+- Keys in `$_FILES` for a file input named `uploaded_file`:
+  - `$_FILES["uploaded_file"]["name"]`: Original file name.
+  - `$_FILES["uploaded_file"]["type"]`: MIME type (e.g., `image/png`).
+  - `$_FILES["uploaded_file"]["size"]`: Size in bytes.
+  - `$_FILES["uploaded_file"]["tmp_name"]`: Temporary file path on the server.
+  - `$_FILES["uploaded_file"]["error"]`: Error code (0 = success).
+
+**Basic Example (`upload.php`):**
+```php
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_FILES["uploaded_file"]) && $_FILES["uploaded_file"]["error"] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES["uploaded_file"]["tmp_name"];
+        $fileName = $_FILES["uploaded_file"]["name"];
+        $fileSize = $_FILES["uploaded_file"]["size"];
+        $fileType = $_FILES["uploaded_file"]["type"];
+
+        // Destination path
+        $uploadDir = "uploads/";
+        $destPath = $uploadDir . basename($fileName);
+
+        // Move the file from temporary location to destination
+        if (move_uploaded_file($fileTmpPath, $destPath)) {
+            echo "File uploaded successfully: $fileName";
+        } else {
+            echo "Error moving file.";
+        }
+    } else {
+        echo "Upload failed. Error code: " . $_FILES["uploaded_file"]["error"];
+    }
+}
+?>
+```
+
+---
+
+#### 3. Key Functions
+- **`move_uploaded_file()`**: Moves the uploaded file from its temporary location to a permanent one.
+  - Syntax: `move_uploaded_file($tmp_name, $destination)`
+  - Returns `true` on success, `false` on failure.
+
+- **`is_uploaded_file()`**: Checks if a file was uploaded via HTTP POST (security check).
+  ```php
+  <?php
+  if (is_uploaded_file($_FILES["uploaded_file"]["tmp_name"])) {
+      echo "This is a valid uploaded file.";
+  }
+  ?>
+  ```
+
+- **`pathinfo()`**: Extracts file information (e.g., extension).
+  ```php
+  <?php
+  $fileName = "image.jpg";
+  $info = pathinfo($fileName);
+  echo $info["extension"]; // Output: jpg
+  ?>
+  ```
+
+---
+
+#### 4. Validation and Security
+- **Check File Size**:
+  ```php
+  <?php
+  $maxSize = 2 * 1024 * 1024; // 2MB in bytes
+  if ($_FILES["uploaded_file"]["size"] > $maxSize) {
+      die("File too large. Max size is 2MB.");
+  }
+  ?>
+  ```
+
+- **Restrict File Types**:
+  ```php
+  <?php
+  $allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+  if (!in_array($_FILES["uploaded_file"]["type"], $allowedTypes)) {
+      die("Invalid file type. Only JPG, PNG, and PDF allowed.");
+  }
+  ```
+
+- **Sanitize File Names**:
+  - Avoid security risks (e.g., overwriting files or path traversal).
+  ```php
+  <?php
+  $fileName = basename($_FILES["uploaded_file"]["name"]); // Removes path info
+  $fileName = preg_replace("/[^A-Za-z0-9._-]/", "", $fileName); // Keep only safe characters
+  ?>
+  ```
+
+- **Unique File Names**:
+  - Prevent overwriting existing files.
+  ```php
+  <?php
+  $fileName = uniqid() . "_" . basename($_FILES["uploaded_file"]["name"]);
+  $destPath = "uploads/" . $fileName;
+  ?>
+  ```
+
+---
+
+#### 5. Error Handling
+- `$_FILES["uploaded_file"]["error"]` returns an error code:
+  - `UPLOAD_ERR_OK` (0): Success.
+  - `UPLOAD_ERR_INI_SIZE` (1): File exceeds `upload_max_filesize` in `php.ini`.
+  - `UPLOAD_ERR_FORM_SIZE` (2): File exceeds `MAX_FILE_SIZE` in the form.
+  - `UPLOAD_ERR_PARTIAL` (3): File only partially uploaded.
+  - `UPLOAD_ERR_NO_FILE` (4): No file uploaded.
+
+**Example:**
+```php
+<?php
+$error = $_FILES["uploaded_file"]["error"];
+if ($error !== UPLOAD_ERR_OK) {
+    switch ($error) {
+        case UPLOAD_ERR_INI_SIZE:
+            echo "File too large (server limit).";
+            break;
+        case UPLOAD_ERR_NO_FILE:
+            echo "No file uploaded.";
+            break;
+        default:
+            echo "Upload error: $error";
+    }
+}
+?>
+```
+
+---
+
+#### 6. Complete Example with Validation
+```php
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_FILES["uploaded_file"]) && $_FILES["uploaded_file"]["error"] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES["uploaded_file"]["tmp_name"];
+        $fileName = basename($_FILES["uploaded_file"]["name"]);
+        $fileSize = $_FILES["uploaded_file"]["size"];
+        $fileType = $_FILES["uploaded_file"]["type"];
+
+        // Validation
+        $maxSize = 2 * 1024 * 1024; // 2MB
+        $allowedTypes = ["image/jpeg", "image/png"];
+        if ($fileSize > $maxSize) {
+            die("File too large. Max 2MB.");
+        }
+        if (!in_array($fileType, $allowedTypes)) {
+            die("Only JPG and PNG allowed.");
+        }
+
+        // Unique file name
+        $uploadDir = "uploads/";
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true); // Create directory if it doesn't exist
+        }
+        $destPath = $uploadDir . uniqid() . "_" . $fileName;
+
+        // Move file
+        if (move_uploaded_file($fileTmpPath, $destPath)) {
+            echo "File uploaded successfully: $destPath";
+        } else {
+            echo "Error uploading file.";
+        }
+    } else {
+        echo "No file uploaded or upload error.";
+    }
+}
+?>
+```
+
+---
+
+#### 7. Configuration in `php.ini`
+- **`upload_max_filesize`**: Max size of an uploaded file (e.g., `2M`).
+- **`post_max_size`**: Max size of POST data (e.g., `8M`).
+- **`max_file_uploads`**: Max number of files that can be uploaded at once (e.g., `20`).
+- **`file_uploads`**: Must be `On` to enable file uploads.
+
+Check with:
+```php
+<?php
+phpinfo();
+?>
+```
