@@ -1028,3 +1028,242 @@ print_r($rest);
 // Output: First: 1, Second: 2, Rest: Array ( [0] => 3 [1] => 4 [2] => 5 )
 ?>
 ```
+---
+
+
+### PHP String Functions
+
+PHP provides a rich set of functions to create, modify, search, and format strings. Strings in PHP are sequences of characters enclosed in single (`'`) or double (`"`) quotes.
+
+#### 1. Basic String Operations
+- **`strlen()`**: Returns the length of a string.
+  ```php
+  <?php
+  $text = "Hello";
+  echo strlen($text); // Output: 5
+  ?>
+  ```
+
+- **`strtolower()`**: Converts a string to lowercase.
+  ```php
+  <?php
+  $text = "HELLO World";
+  echo strtolower($text); // Output: hello world
+  ?>
+  ```
+
+- **`strtoupper()`**: Converts a string to uppercase.
+  ```php
+  <?php
+  $text = "hello world";
+  echo strtoupper($text); // Output: HELLO WORLD
+  ?>
+  ```
+
+- **`ucfirst()`**: Capitalizes the first character of a string.
+  ```php
+  <?php
+  $text = "hello";
+  echo ucfirst($text); // Output: Hello
+  ?>
+  ```
+
+- **`ucwords()`**: Capitalizes the first character of each word.
+  ```php
+  <?php
+  $text = "hello world";
+  echo ucwords($text); // Output: Hello World
+  ?>
+  ```
+
+---
+
+#### 2. Substring Operations
+- **`substr()`**: Extracts a portion of a string.
+  - Syntax: `substr($string, $start, $length)` (length is optional).
+  ```php
+  <?php
+  $text = "Hello World";
+  echo substr($text, 0, 5); // Output: Hello
+  echo substr($text, 6);    // Output: World (from index 6 to end)
+  ?>
+  ```
+
+- **`strstr()` or `strchr()`**: Finds the first occurrence of a substring and returns the rest of the string.
+  ```php
+  <?php
+  $email = "user@example.com";
+  echo strstr($email, "@"); // Output: @example.com
+  ?>
+  ```
+
+- **`strrchr()`**: Finds the last occurrence of a character and returns the rest of the string.
+  ```php
+  <?php
+  $path = "/home/user/file.txt";
+  echo strrchr($path, "/"); // Output: /file.txt
+  ?>
+  ```
+
+---
+
+#### 3. Searching and Replacing
+- **`strpos()`**: Finds the position of the first occurrence of a substring (returns `false` if not found).
+  ```php
+  <?php
+  $text = "Hello World";
+  $pos = strpos($text, "World");
+  echo $pos; // Output: 6
+  if (strpos($text, "PHP") === false) {
+      echo "Not found"; // Output: Not found
+  }
+  ?>
+  ```
+
+- **`strrpos()`**: Finds the position of the last occurrence of a substring.
+  ```php
+  <?php
+  $text = "Hello Hello World";
+  echo strrpos($text, "Hello"); // Output: 6
+  ?>
+  ```
+
+- **`str_replace()`**: Replaces all occurrences of a substring with another string.
+  ```php
+  <?php
+  $text = "Hello World";
+  echo str_replace("World", "PHP", $text); // Output: Hello PHP
+  ?>
+  ```
+
+- **`substr_replace()`**: Replaces a portion of a string with another string.
+  ```php
+  <?php
+  $text = "Hello World";
+  echo substr_replace($text, "PHP", 6, 5); // Output: Hello PHP
+  ?>
+  ```
+
+---
+
+#### 4. Trimming
+- **`trim()`**: Removes whitespace (or specified characters) from both ends.
+  ```php
+  <?php
+  $text = "  Hello  ";
+  echo trim($text); // Output: Hello
+  ?>
+  ```
+
+- **`ltrim()`**: Removes whitespace (or specified characters) from the left.
+  ```php
+  <?php
+  $text = "  Hello";
+  echo ltrim($text); // Output: Hello
+  ?>
+  ```
+
+- **`rtrim()`**: Removes whitespace (or specified characters) from the right.
+  ```php
+  <?php
+  $text = "Hello  ";
+  echo rtrim($text); // Output: Hello
+  ?>
+  ```
+
+---
+
+#### 5. Splitting and Joining
+- **`explode()`**: Splits a string into an array based on a delimiter.
+  ```php
+  <?php
+  $text = "apple,banana,orange";
+  $fruits = explode(",", $text);
+  print_r($fruits); // Output: Array ( [0] => apple [1] => banana [2] => orange )
+  ?>
+  ```
+
+- **`implode()` or `join()`**: Joins array elements into a string with a delimiter.
+  ```php
+  <?php
+  $fruits = ["apple", "banana", "orange"];
+  echo implode(", ", $fruits); // Output: apple, banana, orange
+  ?>
+  ```
+
+---
+
+#### 6. Formatting
+- **`sprintf()`**: Formats a string with placeholders.
+  ```php
+  <?php
+  $name = "Alice";
+  $age = 25;
+  echo sprintf("Name: %s, Age: %d", $name, $age); // Output: Name: Alice, Age: 25
+  ?>
+  ```
+
+- **`number_format()`**: Formats a number with thousands separators and decimal precision.
+  ```php
+  <?php
+  $price = 1234.567;
+  echo number_format($price, 2); // Output: 1,234.57
+  ?>
+  ```
+
+---
+
+#### 7. Comparison
+- **`strcmp()`**: Compares two strings (case-sensitive).
+  - Returns 0 if equal, negative if first is less, positive if first is greater.
+  ```php
+  <?php
+  echo strcmp("apple", "apple"); // Output: 0
+  echo strcmp("apple", "banana"); // Output: -1
+  ?>
+  ```
+
+- **`strcasecmp()`**: Compares two strings (case-insensitive).
+  ```php
+  <?php
+  echo strcasecmp("Apple", "apple"); // Output: 0
+  ?>
+  ```
+
+---
+
+#### 8. Miscellaneous
+- **`str_repeat()`**: Repeats a string a specified number of times.
+  ```php
+  <?php
+  echo str_repeat("Ha", 3); // Output: HaHaHa
+  ?>
+  ```
+
+- **`str_pad()`**: Pads a string to a certain length with another string.
+  ```php
+  <?php
+  echo str_pad("Hello", 10, "-"); // Output: Hello-----
+  ?>
+  ```
+
+- **`wordwrap()`**: Wraps a string to a given number of characters.
+  ```php
+  <?php
+  $text = "This is a long string";
+  echo wordwrap($text, 7, "<br>"); 
+  // Output: 
+  // This is
+  // a long
+  // string
+  ?>
+  ```
+---
+
+#### Multibyte Example
+```php
+<?php
+$utf8 = "こんにちは"; // Japanese "Hello"
+echo mb_strlen($utf8); // Output: 5 (counts characters, not bytes)
+?>
+```
