@@ -1693,3 +1693,5 @@ Check with:
 phpinfo();
 ?>
 ```
+
+**For further studies, you can follow [OOP Concepts](OOP.md)**
