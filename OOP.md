@@ -865,3 +865,6 @@ echo $logger->log("Test"); // Output: Logged: Test
        }
    }
    ```
+
+---
+Learn more about [PDO with MYSQL Database](PDO.md)
